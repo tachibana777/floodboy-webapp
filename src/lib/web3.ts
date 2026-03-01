@@ -1,6 +1,6 @@
 import { createPublicClient, http, defineChain } from 'viem';
-import FactoryABI from './abis/CatLabFactory.json';
-import StoreABI from './abis/CatLabSecureSensorStore.json';
+import FactoryABI from '../abis/CatLabFactory.json';
+import StoreABI from '../abis/CatLabSecureSensorStore.json';
 
 // JIBCHAIN L1 Configuration
 export const jibchain = defineChain({
