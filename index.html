@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FloodBoy - IoT Blockchain Sensor Dashboard on JIBCHAIN L1">
+    <title>FloodBoy Blockchain Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="logo">
+                    <span class="logo-icon">🌊</span>
+                    <span class="logo-text">FloodBoy</span>
+                    <span class="logo-sub">Blockchain Sensor</span>
+                </div>
+                <div class="network-badge">
+                    <span class="dot" id="network-dot"></span>
+                    <span id="network-label">Connecting...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Store Selector -->
+        <div class="store-selector-bar">
+            <div class="inner">
+                <label for="store-select">📡 Select Station:</label>
+                <select id="store-select">
+                    <option value="0xCd3Ec17ddFDa24f8F97131fa0FDf20e7cbd1A8Bb">FloodBoy001</option>
+                    <option value="0x0994Bc66b2863f8D58C8185b1ed6147895632812">FloodBoy016</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Store Info Card -->
+            <section class="card info-card" id="info-card">
+                <div class="card-header-row">
+                    <div>
+                        <h1 id="store-nickname" class="store-name">Loading...</h1>
+                        <p id="store-description" class="store-desc">Fetching data from JIBCHAIN L1...</p>
+                    </div>
+                    <div class="meta-right">
+                        <div class="meta-chip">
+                            <span class="meta-dot green"></span>
+                            <span id="current-block">Block: ---</span>
+                        </div>
+                        <div class="meta-chip">🕐 <span id="last-updated">---</span></div>
+                        <div class="meta-chip addr-chip">
+                            <span id="store-addr-short">0x...</span>
+                            <a id="explorer-link" href="#" target="_blank" title="View on Explorer">↗</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="loading-bar" class="loading-bar">
+                    <div class="loading-fill"></div>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="card chart-card">
+                <div class="chart-header">
+                    <h2 id="chart-title">Water Depth Over Time</h2>
+                    <div class="toggle-group">
+                        <button id="btn-water" class="toggle-btn active water" onclick="switchChart('water')">💧 Water
+                            Depth</button>
+                        <button id="btn-battery" class="toggle-btn battery" onclick="switchChart('battery')">🔋 Battery
+                            Voltage</button>
+                    </div>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="mainChart"></canvas>
+                    <div id="chart-overlay" class="chart-overlay">
+                        <div class="spinner"></div>
+                        <p>Fetching historical data from blockchain...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Table -->
+            <section class="card table-card">
+                <h2>📊 Latest Sensor Reading</h2>
+                <div class="table-wrap">
+                    <table id="data-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Current</th>
+                                <th>Min</th>
+                                <th>Max</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-tbody">
+                            <tr>
+                                <td colspan="4" class="loading-row">⏳ Loading sensor metrics...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Footer Info -->
+            <section class="card footer-card">
+                <div class="footer-grid">
+                    <div class="footer-item">
+                        <span class="f-label">Store Owner</span>
+                        <a id="owner-link" href="#" target="_blank" id="owner-addr" class="addr-link">---</a>
+                    </div>
+                    <div class="footer-item">
+                        <span class="f-label">Deployed Block</span>
+                        <a id="deployed-link" href="#" target="_blank" class="addr-link">#<span
+                                id="deployed-block">---</span></a>
+                    </div>
+                    <div class="footer-item">
+                        <span class="f-label">Sensor Count</span>
+                        <span id="sensor-count">---</span>
+                    </div>
+                    <div class="footer-item">
+                        <span class="f-label">Network</span>
+                        <span>JIBCHAIN L1 (Chain 8899)</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Viem via ESM CDN -->
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
