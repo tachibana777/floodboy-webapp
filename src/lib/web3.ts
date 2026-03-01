@@ -85,19 +85,24 @@ export async function getLatestRecord(storeAddress: `0x${string}`): Promise<{ ti
 }
 
 export async function getHistoricalEvents(storeAddress: `0x${string}`) {
-    const currentBlockNumber = await client.getBlockNumber();
-    const fromBlock = currentBlockNumber - BigInt(28800); // ~24 hours
+    try {
+        const currentBlockNumber = await client.getBlockNumber();
+        const fromBlock = currentBlockNumber > BigInt(40000) ? currentBlockNumber - BigInt(40000) : BigInt(0);
 
-    return await client.getContractEvents({
-        address: storeAddress,
-        abi: StoreABI,
-        eventName: 'RecordStored',
-        fromBlock: fromBlock,
-        toBlock: 'latest',
-        args: {
-            sensor: UNIVERSAL_SIGNER
-        }
-    });
+        return await client.getContractEvents({
+            address: storeAddress,
+            abi: StoreABI,
+            eventName: 'RecordStored',
+            fromBlock: fromBlock,
+            toBlock: 'latest',
+            args: {
+                sensor: UNIVERSAL_SIGNER
+            }
+        });
+    } catch (e) {
+        console.warn("Failed to fetch events with filter, attempting raw fetch", e);
+        return [];
+    }
 }
 
 // Data processing function with CORRECT unit conversions
